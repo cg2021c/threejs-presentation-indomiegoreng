@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Point Light Example</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script type="module">
+            // create scene
+            const scene = new THREE.Scene();
+            // create perspective camera
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            // create renderer
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            // append renderer DOM element to HTML body
+            document.body.appendChild(renderer.domElement);
+            // set camera z position to 55
+            camera.position.z = 45;
+            camera.position.y = 45;
+            // camera.position.x = 30;
+            camera.lookAt(new THREE.Vector3(0,0,0));
+            // create plane mesh
+            let geometry = new THREE.PlaneGeometry(2000, 2000);
+            let material = new THREE.MeshPhongMaterial({ color: 0x808080, dithering: true });
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set( 0, - 1, 0 );
+            mesh.rotation.x = - Math.PI * 0.5;
+            mesh.receiveShadow = true;
+            scene.add(mesh);
+
+            // create a spot light
+            const spotLight = new THREE.SpotLight( 0xffffff );
+            spotLight.position.set(20, 30, 20);
+            spotLight.castShadow = true;
+            spotLight.shadow.mapSize.width = 1024;
+            spotLight.shadow.mapSize.height = 1024;
+            spotLight.shadow.camera.near = 500;
+            spotLight.shadow.camera.far = 4000;
+            spotLight.shadow.camera.fov = 30;
+            spotLight.penumbra = 0.0;
+            scene.add(spotLight);
+
+            // create a spot light helper
+            const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+            scene.add(spotLightHelper);
+
+            // create cube
+            var cube_geometry = new THREE.BoxGeometry(10, 10, 10);
+            var cube_material = new THREE.MeshLambertMaterial({color:0x33ccff});
+            var cube = new THREE.Mesh(cube_geometry, cube_material);
+            cube.position.set(0, 10, 0);
+            scene.add(cube);
+
+            // animate cube
+            animate();
+
+            function animate(){
+                // increment x and y rotation
+                cube.rotation.y += 0.01;
+                cube.rotation.x += 0.01;
+                
+                // render scene
+                renderer.render(scene, camera);
+
+                requestAnimationFrame(animate);
+            }
+		</script>
+	</body>
+</html>
