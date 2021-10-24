@@ -4,7 +4,7 @@
 
 Lens flare is a photo effect caused when light is scattered in a lens system, often in response to a bright light, such as the sun, a full moon, or artificial illumination.
 
-![lensflare](/img/lensflare.jpg)
+![lensflare](./img/lensflare.jpg)
 
 ## Constructor
 
@@ -17,7 +17,7 @@ LensflareElement( `texture` : Texture, `size` : Float, `distance` : Float, `colo
 
 ## Example
 
-![lensflare-demo](/img/lensflare-demo.jpg)
+![lensflare-demo](./img/lensflare-demo.jpg)
 
 This part will explain more about the lens flare example code located at `/src/lensflare/js/app.js`. The flow of the code is as such.
 
@@ -113,11 +113,11 @@ This part will explain more about the lens flare example code located at `/src/l
 
 ### Without Spot Light
 
-![without-spotlight](/img/without-spotlight.jpg)
+![without-spotlight](./img/without-spotlight.jpg)
 
 ### With Spot Light
 
-![with-spotlight](/img/with-spotlight.jpg)
+![with-spotlight](./img/with-spotlight.jpg)
 
 5. Load the flare textures from the `assets`. Three.js lens flare texture number 0 and 3 will be used. Next, define the flare color with value `0xffaacc` and create a `Lensflare` object (stored in `lensFlare`). After that, add `LensflareElement` objects to `lensFlare` to register the flares. Finally, add `lensFlare` to `directionalLight`.
 
@@ -140,11 +140,11 @@ This part will explain more about the lens flare example code located at `/src/l
 
 ### textureFlare0
 
-![lensflare0](/img/lensflare0.png)
+![lensflare0](./img/lensflare0.png)
 
 ### textureFlare3
 
-![lensflare3](/img/lensflare3.png)
+![lensflare3](./img/lensflare3.png)
 
 6. Use the `render()` function to update the rotation of the cube and to render the scene.
 
