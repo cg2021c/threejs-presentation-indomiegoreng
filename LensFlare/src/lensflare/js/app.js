@@ -9,7 +9,7 @@ function init() {
   camera.position.x = -20;
   camera.position.y = 5;
   camera.position.z = 25;
-  camera.lookAt(new THREE.Vector3(10, 0, 0));
+  camera.lookAt(new THREE.Vector3(5, 0, 0));
 
   var trackballControls = initTrackballControls(camera, renderer);
   var clock = new THREE.Clock();
@@ -19,7 +19,7 @@ function init() {
 
   var planeGeometry = new THREE.PlaneGeometry(1000, 1000, 20, 20);
   var planeMaterial = new THREE.MeshLambertMaterial({
-    color: 0xAAAAAA
+    color: 0xffffff
   });
   var plane = new THREE.Mesh(planeGeometry, planeMaterial);
   plane.receiveShadow = true;
@@ -29,6 +29,7 @@ function init() {
   plane.position.x = 0;
   plane.position.y = 0;
   plane.position.z = 0;
+  
   // add the plane to the scene
   scene.add(plane);
 
@@ -54,33 +55,34 @@ function init() {
   scene.add(ambientLight);
 
   // add spotlight for a bit of light
-  var spotLight0 = new THREE.SpotLight(0xcccccc);
-  spotLight0.position.set(-40, 60, -10);
-  spotLight0.lookAt(plane);
-  scene.add(spotLight0);
+  var spotLight = new THREE.SpotLight(0xcccccc);
+  spotLight.position.set(-40, 60, -10);
+  spotLight.lookAt(plane);
+  scene.add(spotLight);
 
-  var target = new THREE.Object3D();
-  target.position = new THREE.Vector3(5, 0, 0);
+  // spot light camera helper for debugging
+  var spotLightCameraHelper = new THREE.CameraHelper(spotLight.shadow.camera);
 
   var pointColor = "#ffffff";
   var directionalLight = new THREE.DirectionalLight(pointColor);
   directionalLight.position.set(30, 10, -50);
   directionalLight.castShadow = true;
-  directionalLight.shadowCameraNear = 0.1;
-  directionalLight.shadowCameraFar = 100;
-  directionalLight.shadowCameraFov = 50;
+  directionalLight.shadow.camera.fov = 50;
   directionalLight.target = plane;
   directionalLight.distance = 0;
-  directionalLight.shadowCameraNear = 2;
-  directionalLight.shadowCameraFar = 200;
-  directionalLight.shadowCameraLeft = -100;
-  directionalLight.shadowCameraRight = 100;
-  directionalLight.shadowCameraTop = 100;
-  directionalLight.shadowCameraBottom = -100;
-  directionalLight.shadowMapWidth = 2048;
-  directionalLight.shadowMapHeight = 2048;
+  directionalLight.shadow.camera.near = 2;
+  directionalLight.shadow.camera.far = 200;
+  directionalLight.shadow.camera.left = -100;
+  directionalLight.shadow.camera.right = 100;
+  directionalLight.shadow.camera.top = 100;
+  directionalLight.shadow.camera.bottom = -100;
+  directionalLight.shadow.mapSize.width = 2048;
+  directionalLight.shadow.mapSize.height = 2048;
 
   scene.add(directionalLight);
+
+  // directional light camera helper for debugging
+  var directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
 
   var controls = new function () {
     this.rotationSpeed = 0.03;
@@ -90,17 +92,16 @@ function init() {
     this.distance = 0;
     this.exponent = 30;
     this.angle = 0.1;
-    this.debug = false;
     this.castShadow = true;
     this.onlyShadow = false;
     this.target = "Plane";
-
+    this.debugDirectionalLight = false;
+    this.debugSpotLight = false;
+    this.disableDirectionalLight = false;
+    this.disableSpotlight = false;
   };
 
   var gui = new dat.GUI();
-  gui.add(controls, 'rotationSpeed', 0, 0.05).onChange(function (e) {
-    directionalLight.rotationSpeed = e;
-  });
   gui.addColor(controls, 'ambientColor').onChange(function (e) {
     ambientLight.color = new THREE.Color(e);
   });
@@ -109,6 +110,26 @@ function init() {
   });
   gui.add(controls, 'intensity', 0, 5).onChange(function (e) {
     directionalLight.intensity = e;
+  });
+  gui.add(controls, 'debugDirectionalLight').onChange(function (e) {
+    if(e) {
+      scene.add(directionalLightCameraHelper);
+    } else {
+      scene.remove(directionalLightCameraHelper);
+    }
+  });
+  gui.add(controls, 'debugSpotLight').onChange(function (e) {
+    if(e) {
+      scene.add(spotLightCameraHelper);
+    } else {
+      scene.remove(spotLightCameraHelper);
+    }
+  });
+  gui.add(controls, 'disableDirectionalLight').onChange(function (e) {
+    directionalLight.visible = !e;
+  });
+  gui.add(controls, 'disableSpotlight').onChange(function (e) {
+    spotLight.visible = !e;
   });
 
   var textureFlare0 = THREE.ImageUtils.loadTexture("../../assets/textures/flares/lensflare0.png");
@@ -123,6 +144,8 @@ function init() {
   lensFlare.addElement(new THREE.LensflareElement(textureFlare3, 70, 0.7, flareColor));
   lensFlare.addElement(new THREE.LensflareElement(textureFlare3, 120, 0.9, flareColor));
   lensFlare.addElement(new THREE.LensflareElement(textureFlare3, 70, 1.0, flareColor));
+
+  // group lens flare with directional light
   directionalLight.add(lensFlare);
 
   render();
