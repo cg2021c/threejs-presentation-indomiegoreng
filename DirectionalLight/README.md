@@ -78,8 +78,8 @@ The parameters are:
 | Parameter | Description |
 | - | - |
 | light | The light to be visualized. |
-| color | [Optional] Hexadecimal color of the light. Default is 0xffffff (white). |
-| intensity | [Optional] Numeric value of the light's strength/intensity. Default is 1. |
+| size | [Optional] Dimensions of the plane. Default is 1. |
+| color | [Optional] If this is not the set the helper will take the color of the light. |
 
 ### Properties
 
