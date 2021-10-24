@@ -14,7 +14,7 @@ function init() {
   var trackballControls = initTrackballControls(camera, renderer);
   var clock = new THREE.Clock();
 
-  // create a scene, that will hold all our elements such as objects, cameras and lights.
+  // create a scene that will contain camera, lights, and other objects
   var scene = new THREE.Scene();
 
   var planeGeometry = new THREE.PlaneGeometry(1000, 1000, 20, 20);
@@ -49,12 +49,12 @@ function init() {
   // add the cube to the scene
   scene.add(cube);
 
-  // add subtle ambient lighting
+  // add ambient light
   var ambiColor = "#1c1c1c";
   var ambientLight = new THREE.AmbientLight(ambiColor);
   scene.add(ambientLight);
 
-  // add spotlight for a bit of light
+  // add spotlight for more light
   var spotLight = new THREE.SpotLight(0xcccccc);
   spotLight.position.set(-40, 60, -10);
   spotLight.lookAt(plane);
@@ -63,6 +63,7 @@ function init() {
   // spot light camera helper for debugging
   var spotLightCameraHelper = new THREE.CameraHelper(spotLight.shadow.camera);
 
+  // create a directional light
   var pointColor = "#ffffff";
   var directionalLight = new THREE.DirectionalLight(pointColor);
   directionalLight.position.set(30, 10, -50);
@@ -79,22 +80,17 @@ function init() {
   directionalLight.shadow.mapSize.width = 2048;
   directionalLight.shadow.mapSize.height = 2048;
 
+  // add directional light to the scene
   scene.add(directionalLight);
 
-  // directional light camera helper for debugging
-  var directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
+  // create a directional light camera helper for debugging
+  var directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
 
   var controls = new function () {
     this.rotationSpeed = 0.03;
     this.ambientColor = ambiColor;
     this.pointColor = pointColor;
     this.intensity = 0.1;
-    this.distance = 0;
-    this.exponent = 30;
-    this.angle = 0.1;
-    this.castShadow = true;
-    this.onlyShadow = false;
-    this.target = "Plane";
     this.debugDirectionalLight = false;
     this.debugSpotLight = false;
     this.disableDirectionalLight = false;
@@ -145,7 +141,7 @@ function init() {
   lensFlare.addElement(new THREE.LensflareElement(textureFlare3, 120, 0.9, flareColor));
   lensFlare.addElement(new THREE.LensflareElement(textureFlare3, 70, 1.0, flareColor));
 
-  // group lens flare with directional light
+  // add lens flare to directional light
   directionalLight.add(lensFlare);
 
   render();
@@ -153,6 +149,7 @@ function init() {
   function render() {
     stats.update();
     trackballControls.update(clock.getDelta());
+    
     // rotate the cube around its axes
     cube.rotation.x += controls.rotationSpeed;
     cube.rotation.y += controls.rotationSpeed;
