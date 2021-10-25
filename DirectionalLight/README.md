@@ -4,6 +4,8 @@ This type of light can be considered as a light that is very far away. All the l
 
 ![directional_light1](https://user-images.githubusercontent.com/73324192/138784367-1b49c131-0f5c-49b9-b3f5-4ee6294be220.jpg)
 
+![2021-10-26 06-25-03_1](https://user-images.githubusercontent.com/73324192/138785455-3144e0e7-2878-4613-8369-ebeded6884ab.gif)
+
 ## DirectionalLight
 
 ### Constructor
