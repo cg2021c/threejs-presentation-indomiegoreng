@@ -44,9 +44,80 @@ The same also happens for methods, you could also use base Light method. Of cour
 |-------------------------------|-----------------|-------------------------------------------------------------------------------------------|
 | copy(source: HemisphereLight) | HemisphereLight | Copies the value of color, intensity and groundColor from the source light into this one. |
 
-### Result
+## Example
 
-This is what HemisphereLight look like.
+In this part, we will learn how to create simple Hemisphere light.
+1. Create the standard index.html with ThreeJS. Here, I used CDN as an example.
+```html
+<head>
+    <title>Basic Breakdown of Three.js</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%
+        }
+    </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r72/three.min.js"></script>
+<script>
+
+
+</script>
+</body>
+</html>
+```
+
+2. On the `script` tag, add scene, camera, and renderer so that we could modified the view.
+```js
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 5;
+
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+```
+
+3. Use Hemisphere light as the ground light of the scene that we will make. Here we make `skyColor` as red and `groundColor` as blue with 1 as intensity.
+```js
+var light = new THREE.HemisphereLight(0xff0000, 0x0000ff,1);
+light.position.set(0,6,0);
+scene.add(light);
+```
+
+4. Give a geometry.
+```js
+var geometry = new THREE.SphereGeometry(1.5, 20, 20);
+var material = new THREE.MeshPhongMaterial({color: 0xdddddd});
+var cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+```
+
+5. Lastly, add render function so that we could get our ThreeJS view.
+```js
+var render = function () {
+    requestAnimationFrame(render);
+
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+
+    renderer.render(scene, camera);
+};
+
+render();
+```
+
+We will get this as a result.
+![Results](./img/result.gif)
+
+### Addition
+
+You could also see what HemisphereLight look like when we change intensity (just copy from `./src`).
 ![img](./img/intensity.gif)
 
 ### Source
