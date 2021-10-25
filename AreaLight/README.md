@@ -4,7 +4,7 @@ With AreaLight, we can define a rectangular area that emits light. RectAreaLight
 ![arealight](images/window.jpg)
 
 #### Constructor
-We can create PointLight instance by using this constructor.
+We can create AreaLight instance by using this constructor.
 ```js
 RectAreaLight( color : Integer, intensity : Float, width : Float, height : Float )
 ```
