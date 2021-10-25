@@ -1,25 +1,6 @@
 # AreaLight
 With AreaLight, we can define a rectangular area that emits light. RectAreaLight emits light uniformly across the face a rectangular plane. This light type can be used to simulate light sources such as bright windows or strip lighting.
 
-Important Notes:
-
-<!-- There is no shadow support.
-Only MeshStandardMaterial and MeshPhysicalMaterial are supported.
-You have to include RectAreaLightUniformsLib into your scene and call init().
-Code Example
-const width = 10;
-const height = 10;
-const intensity = 1;
-const rectLight = new THREE.RectAreaLight( 0xffffff, intensity, width, height );
-rectLight.position.set( 5, 5, 0 );
-rectLight.lookAt( 0, 0, 0 );
-scene.add( rectLight ) -->
-
-<!-- const rectLightHelper = new THREE.RectAreaLightHelper( rectLight );
-rectLight.add( rectLightHelper );
-Examples
-WebGL / rectarealight -->
-
 #### Constructor
 We can create PointLight instance by using this constructor.
 ```js
@@ -89,3 +70,61 @@ See the base Object3D class for common methods.
 
 **.dispose () : null**
 Dispose of the rectAreaLightHelper.
+
+# Example
+This part will explain more about the area light example code
+
+1. Add library and helper needed
+```js
+import * as THREE from './libs/three.module.js';
+import { OrbitControls } from './libs/OrbitControls.js';
+import { RectAreaLightHelper } from './libs/RectAreaLightHelper.js';
+import { RectAreaLightUniformsLib } from './libs/RectAreaLightUniformsLib.js';
+```
+RectAreaLightUniformsLib dibutuhkan untuk 
+OrbitControl dibutuhkan untuk mengubah perspektif camera dari pengguna.
+
+2. Creating renderer, camera, and scene
+```js
+renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setAnimationLoop(animation);
+renderer.outputEncoding = THREE.sRGBEncoding;
+document.body.appendChild(renderer.domElement);
+
+camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+camera.position.set(0, 5, -100);
+
+scene = new THREE.Scene();
+```
+
+3. Create AreaLight
+```js
+const rectLight1 = new THREE.RectAreaLight(0xff0000, 100, 4, 10);
+rectLight1.position.set(-20, 7, 5);
+scene.add(rectLight1);
+
+const rectLight2 = new THREE.RectAreaLight(0x00ff00, 100, 4, 10);
+rectLight2.position.set(0, 7, 5);
+scene.add(rectLight2);
+
+const rectLight3 = new THREE.RectAreaLight(0x0000ff, 100, 4, 10);
+rectLight3.position.set(20, 7, 5);
+scene.add(rectLight3);
+```
+
+4. Creating ground floor
+```js
+const geoFloor = new THREE.BoxGeometry(80, 0.1, 100);
+const matStdFloor = new THREE.MeshStandardMaterial({ color: 0x808080, roughness: 0.1, metalness: 0 });
+const mshStdFloor = new THREE.Mesh(geoFloor, matStdFloor);
+scene.add(mshStdFloor);
+```
+
+5. Creating object to emit the lights
+```js
+scene.add(new RectAreaLightHelper(rectLight1));
+scene.add(new RectAreaLightHelper(rectLight2));
+scene.add(new RectAreaLightHelper(rectLight3));
+```

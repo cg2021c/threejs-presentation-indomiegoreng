@@ -35,18 +35,16 @@
 
             scene = new THREE.Scene();
 
-            RectAreaLightUniformsLib.init();
-
-            const rectLight1 = new THREE.RectAreaLight(0xff0000, 100, 4, 10);
-            rectLight1.position.set(-20, 5, 5);
+            const rectLight1 = new THREE.RectAreaLight(0xff0000, 30, 4, 10);
+            rectLight1.position.set(-20, 7, 5);
             scene.add(rectLight1);
 
-            const rectLight2 = new THREE.RectAreaLight(0x00ff00, 100, 4, 10);
-            rectLight2.position.set(0, 5, 5);
+            const rectLight2 = new THREE.RectAreaLight(0x00ff00, 30, 4, 10);
+            rectLight2.position.set(0, 7, 5);
             scene.add(rectLight2);
 
-            const rectLight3 = new THREE.RectAreaLight(0x0000ff, 100, 4, 10);
-            rectLight3.position.set(20, 5, 5);
+            const rectLight3 = new THREE.RectAreaLight(0x0000ff, 30, 4, 10);
+            rectLight3.position.set(20, 7, 5);
             scene.add(rectLight3);
 
             scene.add(new RectAreaLightHelper(rectLight1));
@@ -58,11 +56,11 @@
             const mshStdFloor = new THREE.Mesh(geoFloor, matStdFloor);
             scene.add(mshStdFloor);
 
-            const geomertry = new THREE.BoxGeometry(20, 5, 5, 16);
+            const geomertry = new THREE.BoxGeometry(10, 10, 10, 16);
             const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0, metalness: 0 });
             const cube = new THREE.Mesh(geomertry, material);
             cube.name = 'cube';
-            cube.position.set(0, 5, -10);
+            cube.position.set(0, 5, -20);
             scene.add(cube);
 
             const controls = new OrbitControls(camera, renderer.domElement);
