@@ -2,6 +2,8 @@
 
 This type of light can be considered as a light that is very far away. All the light rays it sends out are parallel to each other. Directional light is often used to represent the sun.
 
+![directional_light1](https://user-images.githubusercontent.com/73324192/138784367-1b49c131-0f5c-49b9-b3f5-4ee6294be220.jpg)
+
 ## DirectionalLight
 
 ### Constructor
@@ -20,21 +22,13 @@ The parameters are:
 
 ### Properties
 
-#### .castShadow : Boolean
+| Properties | Description |
+| - | - |
+| .castShadow : Boolean | If set to true light will cast dynamic shadows. Warning: This is expensive and requires tweaking to get shadows looking right. The default is false. |
+| .position : Vector3 | This is set equal to Object3D.DefaultUp (0, 1, 0), so that the light shines from the top down. |
+| .shadow : DirectionalLightShadow | A DirectionalLightShadow used to calculate shadows for this light. |
+| .target : Object3D | The DirectionalLight points from its position to target.position. The default position of the target is (0, 0, 0). |
 
-If set to true light will cast dynamic shadows. Warning: This is expensive and requires tweaking to get shadows looking right. The default is false.
-
-#### .position : Vector3
-
-This is set equal to Object3D.DefaultUp (0, 1, 0), so that the light shines from the top down.
-
-#### .shadow : DirectionalLightShadow
-
-A DirectionalLightShadow used to calculate shadows for this light.
-
-#### .target : Object3D
-
-The DirectionalLight points from its position to target.position. The default position of the target is (0, 0, 0).
 Note: For the target's position to be changed to anything other than the default, it must be added to the scene using
 
 ```js
@@ -54,15 +48,13 @@ light.target = targetObject;
 
 The directionalLight will now track the target object.
 
+
 ### Methods
 
-#### .dispose () : undefined
-
-Override of base class's dispose. Disposes of this light's shadow.
-
-#### .copy ( source : DirectionalLight ) : DirectionalLight
-
-Copies value of all the properties from the source to this DirectionalLight.
+| Methods | Description |
+| - | - |
+| .dispose () : undefined | Override of base class's dispose. Disposes of this light's shadow. |
+| .copy ( source : DirectionalLight ) : DirectionalLight | Copies value of all the properties from the source to this DirectionalLight. |
 
 ## DirectionalLightHelper
 
@@ -83,32 +75,17 @@ The parameters are:
 
 ### Properties
 
-#### .lightPlane : Line
-
-Contains the line mesh showing the location of the directional light.
-
-#### .light : DirectionalLight
-
-Reference to the directionalLight being visualized.
-
-#### .matrix : Object
-
-Reference to the light's matrixWorld.
-
-#### .matrixAutoUpdate : Object
-
-See Object3D.matrixAutoUpdate. Set to false here as the helper is using the light's matrixWorld.
-
-#### .color : hex
-
-The color parameter passed in the constructor. Default is undefined. If this is changed, the helper's color will update the next time update is called.
+| Properties | Description |
+| - | - |
+| .lightPlane : Line | Contains the line mesh showing the location of the directional light. |
+| .light : DirectionalLight | Reference to the directionalLight being visualized. |
+| .matrix : Object | Reference to the light's matrixWorld. |
+| .matrixAutoUpdate : Object | See Object3D.matrixAutoUpdate. Set to false here as the helper is using the light's matrixWorld. |
+| .color : hex | The color parameter passed in the constructor. Default is undefined. If this is changed, the helper's color will update the next time update is called. |
 
 ### Methods
 
-#### .dispose () : null
-
-Dispose of the directionalLightHelper.
-
-#### .update () : null
-
-Updates the helper to match the position and direction of the directionalLight being visualized.
+| Methods | Description |
+| - | - |
+| .dispose () : null | Dispose of the directionalLightHelper. |
+| .update () : null | Updates the helper to match the position and direction of the directionalLight being visualized. |
