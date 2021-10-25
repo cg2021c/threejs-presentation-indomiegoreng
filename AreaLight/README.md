@@ -1,6 +1,8 @@
 # AreaLight
 With AreaLight, we can define a rectangular area that emits light. RectAreaLight emits light uniformly across the face a rectangular plane. This light type can be used to simulate light sources such as bright windows or strip lighting.
 
+![arealight](images/window.jpg)
+
 #### Constructor
 We can create PointLight instance by using this constructor.
 ```js
@@ -22,6 +24,12 @@ See the base Light class for common properties.
 **.intensity : Float**
 The light's intensity. Default is 1.
 In physically correct mode, intensity is the luminance (brightness) of the light measured in nits (cd/m^2).
+
+| Intensity | Image |
+| - | - |
+| 1 | ![arealight](images/intensity-1.png) |
+| 10 | ![arealight](images/intensity-10.png) |
+| 1000 | ![arealight](images/intensity-100.png) |
 
 Changing the intensity will also change the light's power.
 
@@ -121,6 +129,7 @@ const matStdFloor = new THREE.MeshStandardMaterial({ color: 0x808080, roughness:
 const mshStdFloor = new THREE.Mesh(geoFloor, matStdFloor);
 scene.add(mshStdFloor);
 ```
+![arealight](images/floor.png)
 
 5. Creating object to emit the lights
 ```js
@@ -128,3 +137,24 @@ scene.add(new RectAreaLightHelper(rectLight1));
 scene.add(new RectAreaLightHelper(rectLight2));
 scene.add(new RectAreaLightHelper(rectLight3));
 ```
+
+![arealight](images/with-helper.png)
+
+6 Adding box geometry with rotation
+```js
+const geomertry = new THREE.BoxGeometry(10, 10, 10, 16);
+const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0, metalness: 0 });
+const cube = new THREE.Mesh(geomertry, material);
+cube.name = 'cube';
+cube.position.set(0, 5, -20);
+scene.add(cube);
+
+
+function animation(time) {
+    const mesh = scene.getObjectByName('cube');
+    mesh.rotation.y = time / 1000;
+    renderer.render(scene, camera);
+}
+```
+
+![arealight](images/box.png)
