@@ -4,7 +4,7 @@ With AreaLight, we can define a rectangular area that emits light. RectAreaLight
 ![arealight](images/window.jpg)
 
 #### Constructor
-We can create PointLight instance by using this constructor.
+We can create AreaLight instance by using this constructor.
 ```js
 RectAreaLight( color : Integer, intensity : Float, width : Float, height : Float )
 ```
@@ -19,8 +19,6 @@ The parameters are:
 
 
 #### Properties
-See the base Light class for common properties.
-
 **.intensity : Float**
 The light's intensity. Default is 1.
 In physically correct mode, intensity is the luminance (brightness) of the light measured in nits (cd/m^2).
@@ -40,8 +38,6 @@ In physically correct mode, power is the luminous power of the light measured in
 Changing the power will also change the light's intensity.
 
 #### Methods
-See the base Light class for common methods.
-
 **.copy ( source : RectAreaLight ) : RectAreaLight**
 Copies value of all the properties from the source to this RectAreaLight.
 
@@ -74,8 +70,6 @@ Reference to the RectAreaLight being visualized.
 The color parameter passed in the constructor. Default is undefined. If this is changed, the helper's color will update the next time update is called.
 
 #### Methods
-See the base Object3D class for common methods.
-
 **.dispose () : null**
 Dispose of the rectAreaLightHelper.
 
@@ -88,9 +82,6 @@ import * as THREE from './libs/three.module.js';
 import { OrbitControls } from './libs/OrbitControls.js';
 import { RectAreaLightHelper } from './libs/RectAreaLightHelper.js';
 import { RectAreaLightUniformsLib } from './libs/RectAreaLightUniformsLib.js';
-```
-RectAreaLightUniformsLib dibutuhkan untuk 
-OrbitControl dibutuhkan untuk mengubah perspektif camera dari pengguna.
 
 2. Creating renderer, camera, and scene
 ```js
