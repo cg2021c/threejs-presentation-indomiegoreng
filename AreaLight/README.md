@@ -82,6 +82,7 @@ import * as THREE from './libs/three.module.js';
 import { OrbitControls } from './libs/OrbitControls.js';
 import { RectAreaLightHelper } from './libs/RectAreaLightHelper.js';
 import { RectAreaLightUniformsLib } from './libs/RectAreaLightUniformsLib.js';
+```
 
 2. Creating renderer, camera, and scene
 ```js
